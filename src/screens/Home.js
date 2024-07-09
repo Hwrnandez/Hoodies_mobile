@@ -69,8 +69,8 @@ export default function Home({ navigation }) {
     return (
         <ImageBackground source={require('../img/fondo.png')} style={styles.backgroundImage}>
             <View style={styles.container}>
-                <Image source={require('../img/football.png')} style={styles.image} />
-                <Text style={styles.welcomeText}>Bienvenido a Soccer Live</Text>
+                <Image source={require('../img/logo.png')} style={styles.image} />
+                <Text style={styles.welcomeText}>Bienvenido a Hoodies Store</Text>
                 <Text style={styles.subtitle}>
                     {nombre ? nombre : 'No hay Nombre para mostrar'}
                 </Text>
