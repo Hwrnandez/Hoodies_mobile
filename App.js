@@ -35,7 +35,6 @@ export default function App() {
         }}>
         {appIsReady ? (
           <>
-            <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Registro" component={Registro} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </>
