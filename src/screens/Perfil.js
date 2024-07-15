@@ -32,8 +32,9 @@ export default function Perfil({ navigation }) {
     const [profileData, setProfileData] = useState({
         nombre_cliente: '',
         apellido_cliente: '',
+                telefono_cliente: '',
+
         direccion_cliente: '',
-        telefono_cliente: '',
         correo_cliente: ''
     });
     // Estado para manejar la visibilidad y el mensaje de la alerta
@@ -86,8 +87,8 @@ export default function Perfil({ navigation }) {
             const formData = new FormData();
             formData.append('nombreCliente', profileData.nombre_cliente);
             formData.append('apellidoCliente', profileData.apellido_cliente);
-            formData.append('direccionCliente', profileData.direccion_cliente);
             formData.append('telefonoCliente', profileData.telefono_cliente);
+            formData.append('direccionCliente', profileData.direccion_cliente);
             formData.append('correoCliente', profileData.correo_cliente);
 
             const response = await fetch(`${ip}/services/public/clientes.php?action=editProfile`, {
@@ -143,14 +144,6 @@ export default function Perfil({ navigation }) {
                         placeholder="Apellido"
                         placeholderTextColor="#fff"
                     />
-                    <Text style={styles.label}>Dirección</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={profileData.direccion_cliente}
-                        onChangeText={(text) => setProfileData((prevData) => ({ ...prevData, direccion_cliente: text }))}
-                        placeholder="Dirección"
-                        placeholderTextColor="#fff"
-                    />
                     <Text style={styles.label}>Teléfono</Text>
                     <TextInput
                         style={styles.input}
@@ -159,6 +152,14 @@ export default function Perfil({ navigation }) {
                         placeholder="Teléfono"
                         placeholderTextColor="#fff"
                         keyboardType="phone-pad"
+                    />
+                    <Text style={styles.label}>Dirección</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={profileData.direccion_cliente}
+                        onChangeText={(text) => setProfileData((prevData) => ({ ...prevData, direccion_cliente: text }))}
+                        placeholder="Dirección"
+                        placeholderTextColor="#fff"
                     />
                     <Text style={styles.label}>Correo</Text>
                     <TextInput

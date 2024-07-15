@@ -128,7 +128,7 @@ export default function Productos({ navigation }) {
                         placeholder={{ label: 'Selecciona una categoría...', value: null }}
                         items={dataCategorias.map(categoria => ({
                             label: categoria.nombre_categoria,
-                            value: categoria.id_categoria,
+                            value: categoria.id_categoria_hoodie,
                         }))}
                     />
                 </View>

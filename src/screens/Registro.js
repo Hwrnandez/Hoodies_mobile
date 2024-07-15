@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView, Image, ImageBackground, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import * as Constantes from '../../src/utils/Constantes';
 
@@ -16,9 +16,9 @@ export default function Registro({ navigation }) {
     const [email, setEmail] = useState('');
     const [clave, setClave] = useState('');
     const [confirmarClave, setConfirmarClave] = useState('');
-    const [showAlert, setShowAlert] = useState(false);// Estado para manejar la visibilidad de la alerta.
-    const [alertMessage, setAlertMessage] = useState('');// Estado para manejar el mensaje de la alerta.
-    const [isRegistering, setIsRegistering] = useState(false);// Estado para indicar si se está registrando.
+    const [showAlert, setShowAlert] = useState(false); // Estado para manejar la visibilidad de la alerta.
+    const [alertMessage, setAlertMessage] = useState(''); // Estado para manejar el mensaje de la alerta.
+    const [isRegistering, setIsRegistering] = useState(false); // Estado para indicar si se está registrando.
 
     // Expresión regular para validar el formato del teléfono (####-####).
     const telefonoRegex = /^\d{4}-\d{4}$/;
@@ -34,6 +34,7 @@ export default function Registro({ navigation }) {
         }
         setTelefono(formatted); // Actualiza el estado con el valor formateado.
     };
+
     // Función para mostrar una alerta con un mensaje específico.
     const showAlertWithMessage = (message) => {
         setAlertMessage(message);  // Establece el mensaje de la alerta.
@@ -71,144 +72,154 @@ export default function Registro({ navigation }) {
             });
             const data = await response.json();
             if (data.status) {
-                Alert('Cuenta registrada correctamente');
+                Alert.alert('Cuenta registrada correctamente');
                 setTimeout(() => {
-                    Alert(false);
                     navigation.navigate('Login'); // Redirección a la pantalla de inicio de sesión después de 2 segundos.
                 }, 2000);
             } else {
                 showAlertWithMessage(data.error);
             }
         } catch (error) {
-            Alert('Ocurrió un problema al registrar la cuenta');
+            Alert.alert('Ocurrió un problema al registrar la cuenta');
         } finally {
             setIsRegistering(false); // Indica que se ha terminado el registro.
         }
+    };
 
-        return (
-            <ScrollView contentContainerStyle={styles.container}>
-                <Text style={styles.title}>Bienvenido</Text>
-                <Text style={styles.subtitle}>Registra tu cuenta para ver nuestros productos</Text>
-
-                <TextInput
-                    style={styles.input}
-                    placeholder="Nombre"
-                    value={nombre}
-                    onChangeText={setNombre}
+    return (
+        <ScrollView contentContainerStyle={styles.container}>
+            <Text style={styles.title}>Bienvenido</Text>
+            <Text style={styles.subtitle}>Registra tu cuenta para ver nuestros productos</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Nombre"
+                value={nombre}
+                onChangeText={setNombre}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Apellido"
+                value={apellido}
+                onChangeText={setApellido}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Teléfono"
+                value={telefono}
+                onChangeText={handleTextChange}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Dirección"
+                value={direccion}
+                onChangeText={setDireccion}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Correo electrónico"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Escribe una contraseña"
+                value={clave}
+                onChangeText={setClave}
+                secureTextEntry
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Confirma tu contraseña"
+                value={confirmarClave}
+                onChangeText={setConfirmarClave}
+                secureTextEntry
+            />
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={handleCreate}>
+                    <Text style={styles.buttonText}>REGISTRARSE</Text>
+                </TouchableOpacity>
+                <AwesomeAlert
+                    show={showAlert}
+                    showProgress={isRegistering}
+                    title={isRegistering ? "Registrando" : "Mensaje"}
+                    message={alertMessage}
+                    closeOnTouchOutside={!isRegistering}
+                    closeOnHardwareBackPress={!isRegistering}
+                    showCancelButton={false}
+                    showConfirmButton={!isRegistering}
+                    confirmText="OK"
+                    confirmButtonColor="gray"
+                    onConfirmPressed={() => {
+                        setShowAlert(false);
+                    }}
+                    contentContainerStyle={styles.alertContentContainer}
+                    titleStyle={styles.alertTitle}
+                    messageStyle={styles.alertMessage}
+                    confirmButtonStyle={styles.alertConfirmButton}
+                    confirmButtonTextStyle={styles.alertConfirmButtonText}
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Apellido"
-                    value={apellido}
-                    onChangeText={setApellido}
-                />-
-                <TextInput
-                    style={styles.input}
-                    placeholder="Teléfono"
-                    value={telefono}
-                    onChangeText={setTelefono}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Dirección"
-                    value={direccion}
-                    onChangeText={setDireccion}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Correo electrónico"
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType="email-address"
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Escribe una contraseña"
-                    value={clave}
-                    onChangeText={setClave}
-                    secureTextEntry
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Confirma tu contraseña"
-                    value={confirmarClave}
-                    onChangeText={setConfirmPassword}
-                    secureTextEntry
-                />
-                <View
-                    style={styles.buttonContainer}
-                >
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>REGISTRARSE</Text>
-                    </TouchableOpacity>
-                    <AwesomeAlert
-                        show={showAlert}
-                        showProgress={isRegistering}
-                        title={isRegistering ? "Registrando" : "Mensaje"}
-                        message={alertMessage}
-                        closeOnTouchOutside={!isRegistering}
-                        closeOnHardwareBackPress={!isRegistering}
-                        showCancelButton={false}
-                        showConfirmButton={!isRegistering}
-                        confirmText="OK"
-                        confirmButtonColor="gray"
-                        onConfirmPressed={() => {
-                            setShowAlert(false);
-                        }}
-                        contentContainerStyle={styles.alertContentContainer}
-                        titleStyle={styles.alertTitle}
-                        messageStyle={styles.alertMessage}
-                        confirmButtonStyle={styles.alertConfirmButton}
-                        confirmButtonTextStyle={styles.alertConfirmButtonText}
-                    />
-                </View>
-
-
-
-            </ScrollView>
-        );
-    }
-
-    const styles = StyleSheet.create({
-        container: {
-            flexGrow: 1,
-            padding: 20,
-            justifyContent: 'center',
-            backgroundColor: '#fff',
-        },
-        title: {
-            fontSize: 32,
-            fontWeight: 'bold',
-            marginBottom: 10,
-        },
-        button: {
-            width: '100%',
-            height: 50,
-            backgroundColor: '#000',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 10,
-            borderRadius: 10,
-        },
-        buttonText: {
-            color: '#fff',
-            fontSize: 18,
-            fontWeight: 'bold',
-        },
-        subtitle: {
-            fontSize: 16,
-            marginBottom: 20,
-        },
-        input: {
-            height: 40,
-            borderColor: '#000',
-            borderWidth: 1,
-            marginBottom: 10,
-            paddingHorizontal: 10,
-        },
-        buttonContainer: {
-            justifyContent: 'center',
-            alignItems: 'center',
-        }
-    });
+            </View>
+        </ScrollView>
+    );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 16,
+        paddingTop: 50,
+    },
+    title: {
+        fontSize: 32,
+    },
+    subtitle: {
+        fontSize: 18,
+        color: '#000',
+        marginBottom: 24,
+    },
+    input: {
+        width: '100%',
+        height: 50,
+        borderColor: '#000',
+        borderWidth: 1,
+        marginBottom: 12,
+        paddingLeft: 10,
+        fontSize: 16,
+    },
+    buttonContainer: {
+        width: '100%',
+        alignItems: 'center',
+    },
+    button: {
+        width: '100%',
+        height: 50,
+        backgroundColor: '#000',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 24,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    alertContentContainer: {
+        // Puedes ajustar el estilo según sea necesario
+    },
+    alertTitle: {
+        // Puedes ajustar el estilo según sea necesario
+    },
+    alertMessage: {
+        // Puedes ajustar el estilo según sea necesario
+    },
+    alertConfirmButton: {
+        // Puedes ajustar el estilo según sea necesario
+    },
+    alertConfirmButtonText: {
+        // Puedes ajustar el estilo según sea necesario
+    }
+});

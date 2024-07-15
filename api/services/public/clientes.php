@@ -19,6 +19,12 @@ if (isset($_GET['action'])) {
                 if (isset($_SESSION['correoCliente'])) {
                     $result['status'] = 1;
                     $result['username'] = $_SESSION['correoCliente'];
+                    $clienteData = $cliente->readOneCorreo($_SESSION['correoCliente']);
+                    if ($clienteData) {
+                        $result['cliente'] = $clienteData;
+                    } else {
+                        $result['error'] = 'No se pudo obtener la información del cliente';
+                    }
                 } else {
                     $result['error'] = 'Correo de usuario indefinido';
                 }
@@ -29,6 +35,32 @@ if (isset($_GET['action'])) {
                     $result['message'] = 'Sesión eliminada correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al cerrar la sesión';
+                }
+                break;
+            case 'readProfile':
+                if ($result['dataset'] = $cliente->readProfile()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Ocurrió un problema al leer el perfil';
+                }
+                break;
+            case 'editProfile':
+                $_POST = Validator::validateForm($_POST);
+                if (
+                    !$cliente->setId($_SESSION['idCliente']) ||  // Asegúrate de establecer el ID del cliente
+                    !$cliente->setNombre($_POST['nombreCliente']) or
+                    !$cliente->setApellido($_POST['apellidoCliente']) or
+                    !$cliente->setTelefono($_POST['telefonoCliente']) or
+                    !$cliente->setDireccion($_POST['direccionCliente']) or
+                    !$cliente->setCorreo($_POST['correoCliente'])
+                ) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->editProfile()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Perfil modificado correctamente';
+                    $_SESSION['correoCliente'] = $_POST['correoCliente'];
+                } else {
+                    $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }
                 break;
             default:

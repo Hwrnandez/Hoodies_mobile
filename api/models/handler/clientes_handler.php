@@ -12,7 +12,7 @@ class ClienteHandler
     protected $id = null;
     protected $nombre = null;
     protected $apellido = null;
-    protected $telefono = null; 
+    protected $telefono = null;
     protected $direccion = null;
     protected $correo = null;
     protected $clave = null;
@@ -36,8 +36,8 @@ class ClienteHandler
         } else {
             return false;
         }
-    } 
-    
+    }
+
     public function  checkStatus()
     {
         if ($this->estado) {
@@ -129,6 +129,33 @@ class ClienteHandler
                 FROM cliente
                 WHERE correo_cliente = ?';
         $params = array($value);
+        return Database::getRow($sql, $params);
+    }
+
+    public function readProfile()
+    {
+        $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente, telefono_cliente, direccion_cliente, correo_cliente, clave_cliente
+                FROM cliente
+                WHERE id_cliente = ?';
+        $params = array($_SESSION['idCliente']);
+        return Database::getRow($sql, $params);
+    }
+    
+    public function editProfile()
+    {
+        $sql = 'UPDATE cliente
+                SET nombre_cliente = ?, apellido_cliente = ?, telefono_cliente = ?, direccion_cliente = ?, correo_cliente = ?
+                WHERE id_cliente = ?';
+        $params = array($this->nombre, $this->apellido, $this->telefono, $this->direccion, $this->correo, $_SESSION['idCliente']);
+        return Database::executeRow($sql, $params);
+    }
+
+    public function readOneCorreo($correo)
+    {
+        $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente, telefono_cliente, direccion_cliente, estado_cliente, correo_cliente
+            FROM cliente
+            WHERE correo_cliente = ?';
+        $params = array($correo);
         return Database::getRow($sql, $params);
     }
 }
