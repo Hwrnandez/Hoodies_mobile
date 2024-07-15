@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
-import * as Constantes from '../../utils/constantes';
+import * as Constantes from '../../src/utils/Constantes';
 
 export default function Perfil({ navigation }) {
     // Obtener la IP de las constantes

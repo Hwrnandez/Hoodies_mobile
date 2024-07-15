@@ -1,9 +1,9 @@
 // Importación de React y otros módulos necesarios para la aplicación.
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Alert, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
-import * as Constantes from '../../utils/constantes';
+import * as Constantes from '../../src/utils/Constantes';
 import ProductoCard from '../components/Productos/ProductoCard';
-import ModalCompra from '../components/Modales/ModalCompra';
+import ModalCompra from '../components/Modales/ModalComprar';
 import RNPickerSelect from 'react-native-picker-select';
 import { FontAwesome } from '@expo/vector-icons';
 import AwesomeAlert from 'react-native-awesome-alerts';

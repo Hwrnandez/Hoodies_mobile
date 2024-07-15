@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
-import * as Constantes from '../../utils/Constantes';
+import * as Constantes from '../../src/utils/Constantes';
 
 //Funcion principal
 export default function Home({ navigation }) {

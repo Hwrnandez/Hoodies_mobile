@@ -1,7 +1,7 @@
 //Importaciones
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ImageBackground, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
-import * as Constantes from '../../utils/constantes';
+import * as Constantes from '../../src/utils/Constantes';
 import CarritoCard from '../components/CarritoCard/CarritoCard';
 import ModalEditarCantidad from '../components/Modales/ModalEditarCantidad';
 import { FontAwesome } from '@expo/vector-icons'; // Importar FontAwesome desde expo
